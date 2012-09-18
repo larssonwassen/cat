@@ -16,7 +16,7 @@ import javax.ws.rs.core.MediaType;
  *
  * @author xclose
  */
-@Path("products")
+@Path("/products")
 public class ProductCatalogueResource {
 
     private final static IProductCatalogue prodcat = ProductCatalogue.newInstance();

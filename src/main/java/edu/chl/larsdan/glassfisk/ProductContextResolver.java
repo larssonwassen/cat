@@ -6,7 +6,6 @@ package edu.chl.larsdan.glassfisk;
 
 import com.sun.jersey.api.json.JSONConfiguration;
 import com.sun.jersey.api.json.JSONJAXBContext;
-import edu.chl.hajo.shop.core.Product;
 import javax.ws.rs.ext.ContextResolver;
 import javax.ws.rs.ext.Provider;
 import javax.xml.bind.JAXBContext;
@@ -26,7 +25,7 @@ import javax.xml.bind.JAXBContext;
 public class ProductContextResolver implements ContextResolver<JAXBContext> {
 
     private JAXBContext context;
-    private Class[] types = {Product.class};
+    private Class[] types = {ProductProxy.class};
 
     public ProductContextResolver() throws Exception {
         this.context = new JSONJAXBContext(JSONConfiguration.natural().build(),

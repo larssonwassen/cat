@@ -17,10 +17,7 @@ ProductProxy.prototype = (function (){
         },
         
         getAll: function() {
-            return $.ajax({
-                type: 'GET',
-                url: this.baseUri 
-            }); 
+            return $.getJSON(this.baseUri);
         },
         
         add: function( product ){
