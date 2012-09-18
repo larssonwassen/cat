@@ -16,17 +16,17 @@ import javax.ws.rs.core.MediaType;
  *
  * @author xclose
  */
-@Path("/products")
+@Path("products")
 public class ProductCatalogueResource {
-
-    private final static IProductCatalogue prodcat = ProductCatalogue.newInstance();
+    private Shop shop = Shop.INSTANCE; 
+    private IProductCatalogue prodcat = shop.getProductCatalogue();
     private final static Logger log = Logger.getAnonymousLogger();
     
-    @GET
+ /*   @GET
     @Path("{name}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public List<ProductProxy> getByName(@PathParam("name") String name) {
-        List<ProductProxy> found = new ArrayList<ProductProxy>();
+        List<ProductProxy> found = new ArrayList<>();
         for (Product p : prodcat.getAll()) {
             if (p.getName().equals(name)) {
                 ProductProxy pp = new ProductProxy(p.getName(), p.getPrice());
@@ -34,13 +34,13 @@ public class ProductCatalogueResource {
             }
         }
         return found;
-    }
+    }*/
 
     @GET
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public List<ProductProxy> getAll() {
         log.log(Level.INFO, "getAll()");
-        List<ProductProxy> all = new ArrayList<ProductProxy>();
+        List<ProductProxy> all = new ArrayList<>();
         for (Product p : prodcat.getAll()) {
             all.add(new ProductProxy(p));
         }
@@ -48,7 +48,7 @@ public class ProductCatalogueResource {
     }
 
     @GET
-    @Path("/get/{id}")
+    @Path("{id}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public ProductProxy getById(@PathParam("id") Long id) {
         Product p = prodcat.find(id);
@@ -56,15 +56,14 @@ public class ProductCatalogueResource {
     }
 
     @DELETE
-    @Path("/delete/{id}")
+    @Path("delete/{id}")
     public void removeById(@PathParam("id") Long id) {
         prodcat.remove(id);
     }
 
     @POST
-    @Path("/add")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    public void add(@FormParam("name") String name, @FormParam("price") double price) {
+    public void add(@FormParam("name") String name, @FormParam("price") Double price) {
 
         log.log(Level.INFO, "add()");
         prodcat.add(new Product(name, price));
@@ -75,27 +74,9 @@ public class ProductCatalogueResource {
     @Path("/update/{id}")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public ProductProxy update(@PathParam("id") Long id, @FormParam("name") String name, @FormParam("price") double price) {
+    public ProductProxy update(@PathParam("id") Long id, @FormParam("name") String name, @FormParam("price") Double price) {
         Product p = new Product(id, name, price);
         prodcat.update(p);
         return new ProductProxy(p);
-    }
-
-    @GET
-    @Path("/range")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<ProductProxy> getRange(@QueryParam("first") int firstResult, @QueryParam("max") int maxResults) {
-        List<ProductProxy> subList = new ArrayList<ProductProxy>();
-        for (Product p : prodcat.getAll().subList(firstResult, firstResult + maxResults)) {
-            subList.add(new ProductProxy(p));
-        }
-
-        return subList;
-    }
-
-    @GET
-    @Path("/count")
-    public String getCount() {
-        return Integer.toString(prodcat.getAll().size());
     }
 }

@@ -23,7 +23,7 @@ ProductProxy.prototype = (function (){
         add: function( product ){
             return $.ajax({
                 type: 'POST',
-                url: this.baseUri+"/add/",
+                url: this.baseUri,
                 data: product   
             }); 
         },
