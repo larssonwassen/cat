@@ -8,11 +8,6 @@ var ProductProxy = function( baseUri ){
 
 ProductProxy.prototype = (function (){ 
     
-    function f(){  
-        
-    }
-    
-   
     return {
         find: function( id ){
             return $.ajax({
@@ -24,7 +19,7 @@ ProductProxy.prototype = (function (){
         getAll: function() {
             return $.ajax({
                 type: 'GET',
-                url: this.baseUri
+                url: this.baseUri 
             }); 
         },
         

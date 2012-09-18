@@ -13,7 +13,7 @@ import javax.xml.bind.annotation.*;
  * @author xclose
  */
 @XmlRootElement(name="product")
-@XmlAccessorType(XmlAccessType.PROPERTY)
+@XmlAccessorType(XmlAccessType.FIELD)
 public class ProductProxy {
     
     private Product prod;
